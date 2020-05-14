@@ -65,6 +65,11 @@ func main() {
 
 	A_inverse := matrix.Inverse(&A)
 
-	fmt.Println("Inverse A matrix:")
+	fmt.Println("\nInverse A matrix:")
 	A_inverse.Print()
+	
+	fmt.Println()
+
+	cond := matrix.ConditionNumberOf(&A)
+	fmt.Printf("Condition Number of A: %6.3f\n", cond)
 }

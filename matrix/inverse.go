@@ -1,7 +1,5 @@
 package matrix
 
-import "fmt"
-
 // Inverse matrix of passed
 func Inverse(m *Matrix) Matrix {
 	// considering matrix is n x n
@@ -21,8 +19,6 @@ func Inverse(m *Matrix) Matrix {
 		}
 
 		_b[i] = 1.0
-
-		fmt.Print(_b)
 
 		x := NewColFrom(Solve(m, _b))
 
