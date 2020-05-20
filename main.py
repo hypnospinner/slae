@@ -262,9 +262,11 @@ def Seidel(matrix, b):
 
 np.set_printoptions(formatter={'float': '{: 0.3f}'.format})
 
-A = np.array([[1, 2, 1],
-              [2, 1, 1],
-              [1, -1, 2],], float)
+n = 5
+A = np.float64(np.random.randint(-25,26,size=(n,n)))
+#A = np.array([[1, 2, 1],
+#              [2, 1, 1],
+#              [1, -1, 2],], float)
 
 L, U, P, Q = factorize(A)
 LU = np.dot(L,U)
@@ -291,7 +293,8 @@ print(LU)
 print("PAQ:")
 print(PAQ)
 
-b = np.array([4,4,4], float)
+#b = np.array([4,4,4], float)
+b = np.float64(np.random.randint(-25,26,size=(n)))
 
 x = solveSLAE(A,b)
 
@@ -329,11 +332,17 @@ print("condA:")
 print(cond)
 
 
-C = np.array([[1, 3, 5],
-              [1, -2, 3],
-              [2, 11, 12]], float)
+#C = np.array([[1, 3, 5],
+#              [1, -2, 3],
+#              [2, 11, 12]], float)
 
-f = np.array([1, 2, 4], float)
+#f = np.array([1, 2, 4], float)
+
+C = np.array(A)
+for j in range(1,n):
+    C[:, j] = (2 - j) * C[:, 0] + (j - 1) * C[:, 2]
+
+f = (2 - n) * C[:, 0] + (n - 1) * C[:, 2]
 
 incx = solveIncompatibleSLAE(C, f)
 
@@ -343,20 +352,20 @@ print("f: ")
 print(f)
 print("incompatible SLAE solution Cx = f: " + incx)
 
-B = np.array([  [9, 1, 0, 0],
-                [1, 9, 1, 0],
-                [0, 1, 9, 1],
-                [0, 0, 1, 9]], float)
+# B = np.array([  [9, 1, 0, 0],
+#                 [1, 9, 1, 0],
+#                 [0, 1, 9, 1],
+#                 [0, 0, 1, 9]], float)
+#
+# e = np.array([1, 2, 4, 1], float)
+#
+# print("B:")
+# print(B)
+#
+# print("e:")
+# print(e)
 
-e = np.array([1, 2, 4, 1], float)
-
-print("B:")
-print(B)
-
-print("e:")
-print(e)
-
-Q, R = factorizeQR(B)
+Q, R = factorizeQR(A)
 
 print("Q:")
 print(Q)
@@ -366,12 +375,14 @@ print(R)
 print("QR: ")
 print(np.dot(Q,R))
 
-qrx = solveSLAEQR(B, e)
+qrx = solveSLAEQR(A, b)
 print("QR solution: ")
 print(qrx)
 
-print("Bx: ")
-print(np.dot(B, qrx))
+print("b: ", b)
+
+print("Ax: ")
+print(np.dot(A, qrx))
 
 DP = makeDPMatrix(5, 20)
 
